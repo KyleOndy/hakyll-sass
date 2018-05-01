@@ -1,20 +1,20 @@
 name: hakyll-sass
-version: 0.2.4
+<<<<<<< HEAD
+version: 0.3.0
 synopsis: Hakyll SASS compiler over hsass
 license: MIT
 license-file: LICENSE
-homepage: https://github.com/meoblast001/hakyll-sass
+homepage: https://github.com/kyleondy/hakyll-sass
 author: Braden Walters
-maintainer: vc@braden-walters.info
+maintainer: Kyle Ondy <kyle@ondy.me>
 category: Web
 build-type: Simple
 cabal-version: >= 1.10
-Tested-With: GHC == 7.10.2, GHC == 8.0.1
 
 description:
   Hakyll compiler which indirectly uses libsass to compile SASS and SCSS to CSS.
   The Ruby SASS compiler is not required. For documentation, see the
-  <https://github.com/meoblast001/hakyll-sass/blob/master/README.md README>.
+  <https://github.com/kyleondy/hakyll-sass/blob/master/README.md README>.
 
 library
   exposed-modules: Hakyll.Web.Sass
@@ -31,4 +31,4 @@ library
 
 source-repository head
   type: git
-  location: https://github.com/meoblast001/hakyll-sass/
+  location: https://github.com/kyleondy/hakyll-sass/
