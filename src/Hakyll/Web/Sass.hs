@@ -5,17 +5,17 @@
 -- Maintainer: Braden Walters <vc@braden-walters.info>
 -- Stability: experimental
 -- Portability: ghc
-
 module Hakyll.Web.Sass
-( sassCompiler
-, sassCompilerWith
-, renderSass
-, renderSassWith
-, selectFileType
-, sassDefConfig
-, module Text.Sass.Options
-) where
+  ( sassCompiler
+  , sassCompilerWith
+  , renderSass
+  , renderSassWith
+  , selectFileType
+  , sassDefConfig
+  , module Text.Sass.Options
+  ) where
 
+<<<<<<< HEAD
 import Control.Monad (join)
 import Data.Default.Class
 import Hakyll.Core.Compiler
@@ -27,6 +27,17 @@ import System.FilePath (takeExtension)
 import Text.Sass.Compilation
 import Text.Sass.Options
 import Prelude
+import           Control.Monad                 (join)
+import           Data.Default.Class
+import           Hakyll.Core.Compiler
+import           Hakyll.Core.Compiler.Internal
+import           Hakyll.Core.Identifier
+import           Hakyll.Core.Item
+import           Hakyll.Core.Provider
+import           Prelude
+import           System.FilePath               (takeExtension)
+import           Text.Sass.Compilation
+import           Text.Sass.Options
 
 -- | Compiles a SASS file into CSS. Use the file extension to determine SCSS
 -- from SASS formatting.
@@ -45,25 +56,26 @@ renderSass item =
   let extension = (takeExtension . toFilePath . itemIdentifier) item
   in case selectFileType sassDefConfig extension of
        Just options -> renderSassWith options item
-       Nothing -> fail "File type must be .scss or .sass."
+       Nothing      -> fail "File type must be .scss or .sass."
 
 -- | Compiles a SASS file item into CSS with options. The file extension will
 -- not be used to determine SCSS from SASS formatting.
 renderSassWith :: SassOptions -> Item String -> Compiler (Item String)
-renderSassWith options item = join $ do
-  provider <- compilerProvider <$> compilerAsk
-  let filePath = resourceFilePath provider (itemIdentifier item)
-  unsafeCompiler $ do
-    resultOrErr <- compileFile filePath options
-    case resultOrErr of
-      Left sassError -> errorMessage sassError >>= fail
-      Right result -> return (makeItem result)
+renderSassWith options item =
+  join $ do
+    provider <- compilerProvider <$> compilerAsk
+    let filePath = resourceFilePath provider (itemIdentifier item)
+    unsafeCompiler $ do
+      resultOrErr <- compileFile filePath options
+      case resultOrErr of
+        Left sassError -> errorMessage sassError >>= fail
+        Right result   -> return (makeItem result)
 
 -- | Use the file extension to determine whether to use indented syntax.
 selectFileType :: SassOptions -> String -> Maybe SassOptions
-selectFileType options ".scss" = Just $ options { sassIsIndentedSyntax = False }
-selectFileType options ".sass" = Just $ options { sassIsIndentedSyntax = True }
-selectFileType _ _ = Nothing
+selectFileType options ".scss" = Just $ options {sassIsIndentedSyntax = False}
+selectFileType options ".sass" = Just $ options {sassIsIndentedSyntax = True}
+selectFileType _ _             = Nothing
 
 -- | Default sass configuration.
 sassDefConfig :: SassOptions
