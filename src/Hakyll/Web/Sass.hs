@@ -48,9 +48,10 @@ renderSass item =
 -- | Compiles a SASS file item into CSS with options. The file extension will
 -- not be used to determine SCSS from SASS formatting.
 renderSassWith :: SassOptions -> Item String -> Compiler (Item String)
-renderSassWith options item =
-  let filePath = toFilePath $ itemIdentifier item
-  in join $ unsafeCompiler $ do
+renderSassWith options item = join $ do
+  provider <- compilerProvider <$> compilerAsk
+  let filePath = resourceFilePath provider (itemIdentifier item)
+  unsafeCompiler $ do
     resultOrErr <- compileFile filePath options
     case resultOrErr of
       Left sassError -> errorMessage sassError >>= fail
